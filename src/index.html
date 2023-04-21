@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./public/iconfont/iconfont.css">
+    <script src="./public/iconfont/iconfont.js"></script>
+  </head>
+  <body>
+    <div class="head">
+      <div class="tool">
+        <div class="tool-content">
+          <div id="hb" onclick="onSetHB()" class="active">
+            <i class="iconfont icon-huabi"></i>
+          </div>
+          <div id="xp" onclick="onSetXP()">
+            <i class="iconfont icon-xiangpi"></i>
+          </div>
+          <div id="wz" onclick="onSetWZ()">
+            <i class="iconfont icon-wenzi"></i>
+          </div>
+        </div>
+        <div class="desc">工具</div>
+      </div>
+      <div class="size">
+        <input type="range" id="thickness-picker" min="1" max="10" value="1">
+        <div class="desc">粗细</div>
+      </div>
+      <div class="color">
+        <input type="color" id="color-picker" />
+        <div class="desc">颜色</div>
+      </div>
+      <button id="select-button">Select</button>
+
+      <div onclick="onSave()">
+        保存
+      </div>
+
+      <div onclick="onExport()">
+        导入
+      </div>
+      <label for="import-image">Import Image</label>
+      <input type="file" id="import-image">
+    </div>
+    <div id="draw-plan" class="draw-plan">
+      <div class="canvas-box">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+    <!-- <input type="text" id="text-input"> -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>

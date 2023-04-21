@@ -1,0 +1,30 @@
+{
+  "id": "4028304",
+  "name": "draw",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5194047",
+      "name": "橡皮",
+      "font_class": "xiangpi",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "7517991",
+      "name": "文字",
+      "font_class": "wenzi",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "16328026",
+      "name": "画笔",
+      "font_class": "huabi",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    }
+  ]
+}
