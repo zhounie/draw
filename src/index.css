@@ -5,7 +5,79 @@ html, body {
   padding: 0;
   background: #ccc;
 }
+
+
+.draw {
+  display: flex;
+}
+.draw .draw-control {
+  background-color: #fff;
+  margin: 10px;
+  padding: 10px;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.draw .draw-control .draw-control-tool {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 40px;
+}
+
+.draw .draw-control .tool .tool-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-gap: 20px;
+}
+
+.draw .draw-control .btn-wrapper {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+}
+
+.draw .draw-control .color {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.draw .draw-control h4 {
+  font-size: 18px;
+}
+.draw .draw-control .tool, .draw .draw-control .size, .draw .draw-control .color {
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.draw .btn {
+  width: 120px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  color: #333;
+}
+.draw .btn:hover{
+  background-color: #eee ;
+}
+
+.draw .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 4px;
+}
+
 .draw-plan {
+  flex: 1;
   padding: 10px;
   height: 100vh;
   box-sizing: border-box;
@@ -15,6 +87,15 @@ html {
   cursor: url('./public/pen2.png') 5 5;
 }
 
+
+.tempDiv {
+  border: 1px dashed blue;
+  background: #5a72f8;
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0.1;
+}
 .head {
   height: 100px;
   background: #fff;
@@ -25,14 +106,14 @@ html {
   
 }
 .tool-content {
-  width: 150px;
+  /* width: 150px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 }
 .desc {
   text-align: center;
-  font-size: 12px;
+  font-size: 16px;
   padding-top: 10px;
 }
 
@@ -42,11 +123,11 @@ html {
 }
 
 .iconfont {
-  color: blue;
+  /* color: blue; */
   cursor: pointer;
 }
-.active {
-  background-color: #ccc;
+.active .btn{
+  background-color: #ccc ;
 }
 
 #thickness-picker {

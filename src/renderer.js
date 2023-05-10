@@ -6,6 +6,8 @@ const path = require('path')
 
 const filePath = path.join(__dirname, './public/pen.png')
 
+const importImage = document.getElementById('import-image');
+
 const canvas = document.getElementById('canvas')
 const plan = document.getElementById('draw-plan')
 canvas.width = plan.clientWidth - 20
@@ -72,7 +74,64 @@ const createInput = (e) => {
   plan.appendChild(input)
 }
 
+function onImportImage (e) {
+  importImage.click()
+}
+
+let isClip = false
+function onClip (e) {
+  isClip = true
+  const box = document.getElementById('canvas-box')
+  console.log(box);
+  box.onmousedown = function(e) {
+    var posx = e.offsetX;
+    var posy = e.offsetY;
+    console.log(posx);
+    var div = document.createElement("div");
+    div.className = "tempDiv";
+    div.style.left = e.offsetX + "px";
+    div.style.top = e.offsetY + "px";
+    box.appendChild(div);
+    box.onmousemove = function(ev) {
+      div.style.left = Math.min(ev.offsetX, posx) + "px";
+      div.style.top = Math.min(ev.offsetY, posy) + "px";
+      div.style.width = Math.abs(posx - ev.offsetX) + "px";
+      div.style.height = Math.abs(posy - ev.offsetY) + "px";
+      box.onmouseup = function(end) {
+        isClip = false
+        clipArea(posx, posy, end.offsetX - posx, end.offsetY - posy )
+        div.parentNode.removeChild(div);
+        box.onmousedown = null;
+        box.onmousemove = null;
+        box.onmouseup = null;
+        
+      }
+    }
+  }
+}
+
+function clipArea(x, y, w, h) {
+  ctx.beginPath()
+  ctx.rect(x, y, w, h)
+  ctx.clip()
+  ctx.closePath()
+  ctx.restore()
+
+  const newCanvas = document.createElement("canvas");
+  newCanvas.width = w;
+  newCanvas.height = h;
+  const newCtx = newCanvas.getContext("2d");
+  newCtx.drawImage(canvas, x, y, w, h, 0, 0, w, h);
+
+  canvas.width = w
+  canvas.height = h
+  // 显示裁剪后的区域
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(newCanvas, 0, 0);
+}
+
 function startDrawing(e) {
+  if (isClip) return
   drawing = true;
   if (checked === 1) {
     createInput(e)
@@ -97,6 +156,7 @@ function draw(e) {
 }
 
 function stopDrawing() {
+  if (isClip) return
   ctx.globalCompositeOperation = 'source-over'; // 恢复混合模式为 source-over
   drawing = false;
 }
@@ -121,24 +181,36 @@ function getText() {
 const xp = document.getElementById('xp')
 const wz = document.getElementById('wz')
 const hb = document.getElementById('hb')
+const cj = document.getElementById('cj')
 let checked = 3
 function onSetXP () {
   hb.className = ''
   wz.className = ''
+  cj.className = ''
   checked = 0
   xp.classList.add('active')
 }
 function onSetWZ () {
   hb.className = ''
   xp.className = ''
+  cj.className = ''
   checked = 1
   wz.classList.add('active')
 }
 function onSetHB () {
   xp.className = ''
   wz.className = ''
+  cj.className = ''
   checked = 2
   hb.classList.add('active')
+}
+function onSetCj () {
+  xp.className = ''
+  wz.className = ''
+  hb.className = ''
+  checked = 3
+  cj.classList.add('active')
+  onClip()
 }
 
 const onSave = () => {
@@ -151,8 +223,6 @@ const onSave = () => {
   document.body.removeChild(link); // 下载完成后将链接从文档中移除
 }
 
-
-const importImage = document.getElementById('import-image');
 
 importImage.addEventListener('change', function(e) {
   const file = e.target.files[0]; // 获取选择的文件
