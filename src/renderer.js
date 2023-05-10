@@ -12,6 +12,16 @@ const canvas = document.getElementById('canvas')
 const plan = document.getElementById('draw-plan')
 canvas.width = plan.clientWidth - 20
 canvas.height = plan.clientHeight - 20
+
+window.onresize = () => {
+  canvas.width = plan.clientWidth - 20
+  canvas.height = plan.clientHeight - 20
+  ctx.fillStyle = '#fff'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+}
+
+
+
 const ctx = canvas.getContext('2d');
 ctx.fillStyle = '#fff'
 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -104,7 +114,8 @@ function onClip (e) {
         box.onmousedown = null;
         box.onmousemove = null;
         box.onmouseup = null;
-        
+
+        onSetHB()
       }
     }
   }
@@ -231,8 +242,19 @@ importImage.addEventListener('change', function(e) {
   reader.onload = function(event) { // 文件读取成功后执行
     const image = new Image();
     image.src = event.target.result; // 获取文件数据 URL
+    image.width = canvas.width
+    image.height = canvas.height
     image.onload = function() { // 图片加载完成后执行
-      ctx.drawImage(image, 0, 0); // 将图片绘制到画布上
+      const imgRatio = image.width / image.height
+      let dw, dh
+      if (image.width > image.height) {
+        dw = image.width / imgRatio
+        dh = canvas.height
+      } else {
+        dw = canvas.width
+        dh = image.height / imgRatio
+      }
+      ctx.drawImage(image, 0, 0, dw, dh); // 将图片绘制到画布上
     };
   };
 
